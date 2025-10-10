@@ -18,11 +18,17 @@ int main(int argc, char **argv) {
     };
     */
 
+    /*  Task 1 
     int x = 10;
     int* p = &x;
     fmt::println("x: {} (Adresse: {})\np: {} (Adresse: {})", x, fmt::ptr(&x), *p, fmt::ptr(p));
     *p = 42;
     fmt::println("x: {} (Adresse: {})\np: {} (Adresse: {})", x, fmt::ptr(&x), *p, fmt::ptr(p));
+    */
+
+    double* d = new double(3.1415);
+    fmt::println("d: {} (Adresse: {})", *d, fmt::ptr(d));
+    delete d;
 
     return 0; /* exit gracefully*/
 }
