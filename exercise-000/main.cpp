@@ -11,9 +11,8 @@ int main(int argc, char **argv) {
      * More info at https://fmt.dev/latest/api.html
      */
     fmt::print("Hello, {} in version {} !\n", tea::PROJECT_NAME, tea::PROJECT_VER);
-    fmt::println("argc: {}", argc);
     for(int num = 0; num < argc; num++){
-        fmt::println("argv[{}]: {}", num, argv[num]);
+        fmt::println("argc[{}]: {} (Adresse: {})", num, argv[num], fmt::ptr(argv[num]));
     };
 
     /* INSERT YOUR CODE HERE */
