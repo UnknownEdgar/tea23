@@ -3,6 +3,16 @@
 
 #include "config.h"
 
+void changeValueByParameter(int value){
+    value = 99;
+    fmt::println("ValueByPara: {}", value);
+}
+
+void changeValueByPointer(int* ptr){
+    *ptr = 77;
+    fmt::println("ValueByPtr: {}", *ptr);
+}
+
 int main(int argc, char **argv) {
 
     /**
@@ -26,9 +36,18 @@ int main(int argc, char **argv) {
     fmt::println("x: {} (Adresse: {})\np: {} (Adresse: {})", x, fmt::ptr(&x), *p, fmt::ptr(p));
     */
 
+    /*  Task 2
     double* d = new double(3.1415);
     fmt::println("d: {} (Adresse: {})", *d, fmt::ptr(d));
     delete d;
+    */
+    
+    int y = 5;
+    fmt::println("y: {}",y);
+    changeValueByParameter(y);
+    fmt::println("y: {}",y);
+    changeValueByPointer(&y);
+    fmt::println("y: {}",y);
 
     return 0; /* exit gracefully*/
 }
