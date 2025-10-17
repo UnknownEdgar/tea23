@@ -25,7 +25,7 @@ int main(int argc, char **argv) {
 
     int* heapVar = new int(3);
 
-    fmt::println("Hello, {}!\n", tea::PROJECT_NAME);
+    fmt::print("Hello, {}!\n", tea::PROJECT_NAME);
     
     fmt::println("Der Wert von globalVar1: {}, die Adresse von globalVar1: {}", globalVar1, fmt::ptr(&globalVar1));
     fmt::println("Der Wert von globalVar2: {}, die Adresse von globalVar2: {}", globalVar2, fmt::ptr(&globalVar2));
