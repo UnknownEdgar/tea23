@@ -19,6 +19,8 @@ int main(int argc, char **argv) {
     static int localVar2 = 2;
     const int localVar3 = 2;
 
+    int* heapVar = new int(3);
+
     fmt::println("Hello, {}!\n", tea::PROJECT_NAME);
     
     fmt::println("Der Wert von globalVar1: {}, die Adresse von globalVar1: {}", globalVar1, fmt::ptr(&globalVar1));
@@ -33,6 +35,9 @@ int main(int argc, char **argv) {
     fmt::println("Der Wert von localVar1: {}, die Adresse von localVar1: {}", localVar1, fmt::ptr(&localVar1));
     fmt::println("Der Wert von static localVar2: {}, die Adresse von localVar2: {}", localVar2, fmt::ptr(&localVar2));
     fmt::println("Der Wert von const localVar3: {}, die Adresse von localVar3: {}", localVar3, fmt::ptr(&localVar3));
+    fmt::println("Der Wert von heapVar: {}, die Adresse von heapVar: {}", *heapVar, fmt::ptr(heapVar));
+
+    delete heapVar;
 
     return 0; /* exit gracefully*/
 }
