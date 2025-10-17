@@ -13,6 +13,10 @@ static int globalVar6 = 100;
 const int globalVar8 = 0;
 const int globalVar9 = 100;
 
+void foo(){
+    fmt::println("Hello from foo!");
+}
+
 int main(int argc, char **argv) {
 
     int localVar1 = 2;
@@ -36,6 +40,8 @@ int main(int argc, char **argv) {
     fmt::println("Der Wert von static localVar2: {}, die Adresse von localVar2: {}", localVar2, fmt::ptr(&localVar2));
     fmt::println("Der Wert von const localVar3: {}, die Adresse von localVar3: {}", localVar3, fmt::ptr(&localVar3));
     fmt::println("Der Wert von heapVar: {}, die Adresse von heapVar: {}", *heapVar, fmt::ptr(heapVar));
+
+    fmt::println("Adresse von foo: {}", fmt::ptr(&foo));
 
     delete heapVar;
 
