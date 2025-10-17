@@ -45,5 +45,21 @@ int main(int argc, char **argv) {
 
     delete heapVar;
 
+    /*
+    Bedeutung der Zuweisung: 
+    globale + static Variablen () -> Heap
+    lokale Variablen -> Stack
+    
+    global -> Heap
+    global static -> Heap
+    global const -> Heap
+    local static -> Heap
+    local heap -> Heap
+    local -> Stack
+    local const -> Stack
+    function -> Heap
+
+    */
+
     return 0; /* exit gracefully*/
 }
