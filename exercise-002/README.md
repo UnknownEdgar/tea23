@@ -84,6 +84,12 @@ Jede richtige Antwort bringt **1 Exorzismus-Punkt**.
 | 3 | Warum ist Rekursion gefährlich ohne Abbruchbedingung? | a) Stack Overflow<br>b) Heap Overflow<br>c) Heapdämon ruft `malloc()` unendlich oft |
 | 4 | Wie nennt man Speicher, der nie wieder freigegeben wird? | a) Memory Leak 👻<br>b) Stack Frame<br>c) Lost Pointer |
 
+Antworten:
+F1: a)
+F2: b)
+F3: a)
+F4: a)
+
 > 💬 **Diskussion:**  
 > Welche Fehler sind in echten Mikrocontrollersystemen besonders kritisch?
 
