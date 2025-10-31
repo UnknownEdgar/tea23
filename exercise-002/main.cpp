@@ -1,7 +1,7 @@
 #include <fmt/format.h>
 #include "graveyard.h"
 
-//int undead = 7;
+int undead = 7;
 
 int main() {
     fmt::println("🪦 Globale Variable sagt: {}", undead);

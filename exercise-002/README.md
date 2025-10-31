@@ -304,11 +304,11 @@ int main() {
    1. Theoretisch sollte dies dazu führen, dass keine neue Variablen angelegt werden, sondern nur die Variable aus main.cpp verwendet wird  
 4. In welchem Speicherbereich liegen:
    - die globale Variable `undead`?
-     - Heap
+     - Datensegment (bss)
    - die lokale Variable in `awaken()`?
      - Stack
    - die statische Variable in `persistent()`?
-     - Heap
+     - Datensegment ()
 
 > 💬 **Diskussion:**  
 > Welche „Untoten“ überleben das Ende der Funktion – und warum?
