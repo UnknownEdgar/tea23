@@ -128,7 +128,20 @@ int main() {
 }
 ```
 
+- Fehler: Speicher wird zugewiesen ohne anschließend gelöscht zu werden (Memory Leak)
+
 - Führen Sie eine Exorzismus durch: Wo müsste `free()` aufgerufen werden?
+
+- Fehlerlösung:  
+
+```cpp
+void cursed() {
+    char *soul = (char*)malloc(8);
+    strcpy(soul, "boo!");
+    fmt::println("{}", soul);
+    free(soul);
+}
+```
 
 ---
 
@@ -147,8 +160,15 @@ int main() {
 }
 ```
 
+- Fehler: 
+  - Der Speicher wird gelöscht bevor der Wert ausgegeben wird.
+  - Programm kann nicht kompiliert werden.
+
 - Was passiert, wenn Sie anschließend **erneut Speicher allokieren**?  
   - Prüfen und vergleichen Sie die Adressen und überlegen Sie mögliche Fehlerquellen.
+
+- Bei der erneuten Allokierung nach free() wird, die Variable erzeugt, aber ohne Wert belegt.
+- Außerdem gibt der Kompilierer einen Fehler auf Grund der doppelten Zuweisung der Variable aus.
 
 ---
 
@@ -166,6 +186,12 @@ int main() {
 
 > 🧩 **Aufgabe:**  
 > Erklären Sie, was hier langfristig passiert – und was das für ein Embedded-System bedeuten würde.
+
+- Fehler:
+  - Stack Overflow (dauerhaft erneute Zuweisung ohne alte Adressen zu löschen)
+  - Programm kann Schleife nicht beenden
+- Embedded System: 
+  - Absturz da Stack Overflow
 
 ---
 
@@ -199,9 +225,15 @@ Beispiel:
 Kurze gemeinsame Reflexion:
 
 - Wann tritt ein Stack Overflow auf?  
+  - Der Adressbereich des Mikrocontrollers/Systems wird überschritten und es können keine neuen Variablen mehr gespeichert werden
 - Warum entstehen Memory Leaks?  
+  - Entsteht, wenn nach dem Aufruf einer Allokation der entsprechende Speicherplatz nicht mehr freigegeben wird (free)
 - Was ist gefährlicher: Ein Zombie-Pointer oder ein Leak?  
+  - Zombie-Pointer, weil bei einem Leak nur Speicherplatz verschwendet wird, während bei einem Zombie-Pointer auf einen bereits freigegebenen Speicher gezeigt wird. Dieser freigegebene Speicher kann zu unvorhersehbaren Verhalten oder Datenkorruption führen
 - Wie kann man solche Fehler frühzeitig erkennen?  
+  - statische Code-Analyse Tools zur Überprüfung auf uninitialisierte Zeiger oder Speicherlecks
+  - dynamische Analyse Tools zur Überwachung des Laufzeitverhalten, auf Speicherzugriffsfehler oder Speicherlecks
+  - 
 
 Optional:  
 > Zeichnen Sie ein einfaches Diagramm, das Stack, Heap, Code und Daten-Segment im Speicher zeigt.  
