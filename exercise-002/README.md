@@ -297,12 +297,18 @@ int main() {
 ### Fragen dazu
 
 1. Wie unterscheiden sich die Adressen der drei `undead`-Variablen?  
-2. Warum bleibt der Wert in `persistent()` zwischen Aufrufen erhalten?  
-3. Was passiert, wenn man `extern int undead;` in `graveyard.c` verwendet?  
+   1. Globale Variablen, lokale Variablen und statische Variablen
+2. Warum bleibt der Wert in `persistent()` zwischen Aufrufen erhalten?
+   1. Statische Variablen bleiben auch nach dem Funktionsaufruf erhalten  
+3. Was passiert, wenn man `extern int undead;` in `graveyard.c` verwendet?
+   1. Theoretisch sollte dies dazu führen, dass keine neue Variablen angelegt werden, sondern nur die Variable aus main.cpp verwendet wird  
 4. In welchem Speicherbereich liegen:
    - die globale Variable `undead`?
+     - Stack
    - die lokale Variable in `awaken()`?
+     - Heap
    - die statische Variable in `persistent()`?
+     - Stack
 
 > 💬 **Diskussion:**  
 > Welche „Untoten“ überleben das Ende der Funktion – und warum?
