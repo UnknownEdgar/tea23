@@ -1,96 +1,59 @@
-#include <fmt/chrono.h>
+#include <iostream>
 #include <fmt/format.h>
 
-#include <iostream>
-
-enum Zustand{
+enum Zustand {
     Garagentor_zu,
     Fahre_hoch,
     Stop_auf_dem_Weg_nach_oben,
     Garagentor_offen,
     Fahre_runter,
-    Stop_auf_dem_Weg_nach_unten
+    Stop_auf_dem_Weg_nach_unten,
+    Zustandsanzahl  // Hilfswert, für die Tabellenlänge
 };
 
-enum Ereignis{
+enum Ereignis {
     Taste,
-    Endschalter_Oben,
-    Endschalter_Unten
+    Endschalter_oben,
+    Endschalter_unten,
+    Ereignisanzahl
+};
+
+// Look-Up-Tabelle: nächste Zustände
+Zustand overgangsTabelle[Zustandsanzahl][Ereignisanzahl] = {
+    // Garagentor_zu   // Fahre_hoch   // Stop_auf_dem_Weg_nach_oben   // Garagentor_offen   // Fahre_runter   // Stop_auf_dem_Weg_nach_unten
+    // Taste,          Endschalter_oben,         Endschalter_unten
+    {Fahre_hoch, Garagentor_zu, Garagentor_zu},                        // Garagentor_zu
+    {Stop_auf_dem_Weg_nach_oben, Garagentor_offen, Fahre_hoch},        // Fahre_hoch
+    {Fahre_runter, Stop_auf_dem_Weg_nach_oben, Stop_auf_dem_Weg_nach_oben}, // Stop_auf_dem_Weg_nach_oben
+    {Fahre_runter, Garagentor_offen, Garagentor_offen},                // Garagentor_offen
+    {Stop_auf_dem_Weg_nach_unten, Fahre_runter, Garagentor_zu},        // Fahre_runter
+    {Fahre_hoch, Stop_auf_dem_Weg_nach_unten, Stop_auf_dem_Weg_nach_unten} // Stop_auf_dem_Weg_nach_unten
 };
 
 Zustand zustand = Garagentor_zu;
 
-void eingabe(Ereignis ereignis){
-    switch (zustand)
-    {
-        case Garagentor_zu:
-            if (ereignis == Taste) zustand = Fahre_hoch;
-            break;
-
-        case Fahre_hoch:
-            if (ereignis == Endschalter_Oben) zustand = Garagentor_offen;
-            else if (ereignis == Taste) zustand = Stop_auf_dem_Weg_nach_oben;
-            break;
-        
-        case Stop_auf_dem_Weg_nach_oben:
-            if (ereignis == Taste) zustand = Fahre_runter;
-            break;
-
-        case Garagentor_offen:
-            if (ereignis == Taste) zustand = Fahre_runter;
-            break;
-        
-        case Fahre_runter:
-            if(ereignis == Endschalter_Unten) zustand = Garagentor_zu;
-            else if (ereignis == Taste) zustand = Stop_auf_dem_Weg_nach_unten;
-            break;
-            
-        case Stop_auf_dem_Weg_nach_unten:
-            if (ereignis == Taste) zustand = Fahre_hoch;
-            break;
-            
+void printZustand() {
+    switch (zustand) {
+        case Garagentor_zu: fmt::println("Garagentor zu"); break;
+        case Fahre_hoch: fmt::println("Fahre hoch"); break;
+        case Stop_auf_dem_Weg_nach_oben: fmt::println("Stop auf dem Weg nach Oben"); break;
+        case Garagentor_offen: fmt::println("Garagentor offen"); break;
+        case Fahre_runter: fmt::println("Fahre runter"); break;
+        case Stop_auf_dem_Weg_nach_unten: fmt::println("Stop auf dem Weg nach unten"); break;
     }
 }
 
-void printZustand(){
-    switch (zustand)
-    {
-        case Garagentor_offen:
-            fmt::println("Garagentor offen");
-            break;
-
-        case Fahre_hoch:
-            fmt::println("Garagentor faehrt hoch");
-            break;
-
-        case Stop_auf_dem_Weg_nach_oben:
-            fmt::println("Garagentor auf dem Weg hoch gestoppt");
-            break;
-
-        case Garagentor_zu:
-            fmt::println("Garagentor geschlossen");
-            break;
-
-        case Fahre_runter:
-            fmt::println("Garagentor faehrt runter");
-            break;
-
-        case Stop_auf_dem_Weg_nach_unten:
-            fmt::println("Garagentor auf dem Weg runter gestoppt");
-            break;
-    }
+// Einfache Ereignisverarbeitung via Tabelle
+void eingabe(Ereignis ev) {
+    zustand = overgangsTabelle[zustand][ev];
 }
 
 int main() {
     Ereignis ablauf[] = {
-        Taste,                // Garagentor_zu -> Fahre_hoch
-        Taste,                // Fahre_hoch -> Stop_auf_dem_Weg_nach_oben
-        Taste,                // Stop_auf_dem_Weg_nach_oben -> Fahre_runter
-        Taste,                // Fahre_runter -> Stop_auf_dem_Weg_nach_unten
-        Taste,                // Stop_auf_dem_Weg_nach_unten -> Fahre_hoch
-        Endschalter_Oben,     // Fahre_hoch -> Garagentor_offen
-        Taste,                // Garagentor_offen -> Fahre_runter
-        Endschalter_Unten     // Fahre_runter -> Garagentor_zu
+        Taste, Taste, Taste,
+        Taste, Taste,
+        Endschalter_oben,
+        Taste, Endschalter_unten
     };
 
     int n = sizeof(ablauf) / sizeof(ablauf[0]);
