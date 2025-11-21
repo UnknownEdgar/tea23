@@ -3,6 +3,7 @@
 
 #include "CLI/CLI.hpp"
 #include "config.h"
+#include "image.h"
 
 auto main(int argc, char **argv) -> int
 {
@@ -30,6 +31,11 @@ auto main(int argc, char **argv) -> int
 
     /* INSERT YOUR CODE HERE */
 
+    int length = sizeof(image)/sizeof(image[0]);
+
+    fmt::println("Width: {}",image_width);
+    fmt::println("Height: {}",image_height);
+    fmt::println("Length Array: {}",length);
 
     return 0; /* exit gracefully*/
 }
