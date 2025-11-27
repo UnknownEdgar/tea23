@@ -1,8 +1,8 @@
-#ifndef MY_FANCY_LINKED_LIST_H__
-#define MY_FANCY_LINKED_LIST_H__
+#ifndef LIST_HPP
+#define LIST_HPP
 
 typedef struct ListNode {
-    unsigned int data;
+    int data;
     struct ListNode* pNext;
 } ListNode_t;
 
@@ -12,15 +12,15 @@ typedef struct List {
     unsigned int size;
 } List_t;
 
+// Function declarations
 ListNode_t* NewListNode(void);
 void FreeListNode(ListNode_t* elem);
-
 List_t* NewList(void);
-void FreeList(List_t*);
-
+void FreeList(List_t* list);
 int InsertIntoLinkedList(List_t* list, ListNode_t* elem);
-int InsertIntoLinkedListAfterNode(List_t* list, ListNode_t* node /* the node we insert the element into */, ListNode_t* elem);
+int InsertIntoLinkedListAfterNode(List_t* list, ListNode_t* node, ListNode_t* elem);
 int RemoveFromList(List_t* list, ListNode_t* elem);
 ListNode_t* GetNext(const List_t* list, ListNode_t* elem);
+void PrintList(const List_t* list);  // Make sure this line is present!
 
 #endif
