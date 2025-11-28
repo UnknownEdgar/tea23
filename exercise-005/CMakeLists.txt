@@ -16,6 +16,7 @@ find_package(fmt REQUIRED)
 add_executable(${PROJECT_NAME} 
                             main.cpp
                             list.cpp
+                            vector.cpp
 )
 
 # Add libraries
