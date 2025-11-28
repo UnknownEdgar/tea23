@@ -40,29 +40,36 @@ auto main(int argc, char** argv) -> int
     // ========== VECTOR TESTING ==========
     fmt::print("\n=== VECTOR ===\n");
     
+    // 1. Vector initialisieren
     Vector_t myVector;
     vector_init(&myVector);
+    fmt::print("Vector initialized with capacity: {}\n\n", myVector.capacity);
 
+    // 2. Fünf Werte einfügen
+    fmt::print("Inserting 5 values:\n");
     for (unsigned int i = 1; i <= 5; ++i) {
         vector_push_back(&myVector, i * 10);
     }
-
-    fmt::print("Initial vector:\n");
+    fmt::print("Vector after inserting 5 values: ");
     vector_print(&myVector);
 
-    vector_push_back(&myVector, 25);
-    fmt::print("After pushing 25:\n");
-    vector_print(&myVector);
-
+    // 3. Element an Index 2 ausgeben
     unsigned int value;
-    vector_get(&myVector, 2, &value);
-    fmt::print("Element at index 2: {}\n", value);
+    int result = vector_get(&myVector, 2, &value);
+    if (result == 0) {
+        fmt::print("Element at index 2: {}\n", value);
+    } else {
+        fmt::print("Error: Index out of bounds\n");
+    }
 
-    fmt::print("Vector size: {}, capacity: {}\n", myVector.size, myVector.capacity);
+    // 4. Vector ausgeben
+    fmt::print("Final vector state:\n");
+    fmt::print("  Size: {}\n", myVector.size);
+    fmt::print("  Capacity: {}\n", myVector.capacity);
+    fmt::print("  Contents: ");
+    vector_print(&myVector);
 
     vector_clear(&myVector);
-    fmt::print("After clearing:\n");
-    vector_print(&myVector);
 
     return 0;
 }
