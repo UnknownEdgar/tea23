@@ -59,6 +59,41 @@ int vector_get(const Vector_t* vec, size_t index, unsigned int* outValue)
     return 0; // success
 }
 
+int vector_insert_at(Vector_t* vec, size_t index, unsigned int value)
+{
+    if (vec == nullptr) {
+        return -1;
+    }
+
+    if (index > vec->size) {
+        return -1; // index out of bounds
+    }
+
+    // If capacity exceeded, double it
+    if (vec->size >= vec->capacity) {
+        size_t newCapacity = vec->capacity * 2;
+        unsigned int* newData = new unsigned int[newCapacity];
+        
+        // Copy existing data
+        for (size_t i = 0; i < vec->size; ++i) {
+            newData[i] = vec->data[i];
+        }
+        
+        delete[] vec->data;
+        vec->data = newData;
+        vec->capacity = newCapacity;
+    }
+
+    // Shift elements to the right
+    for (size_t i = vec->size; i > index; --i) {
+        vec->data[i] = vec->data[i - 1];
+    }
+
+    vec->data[index] = value;
+    vec->size++;
+    return 0; // success
+}
+
 void vector_print(const Vector_t* vec)
 {
     if (vec == nullptr || vec->data == nullptr) {

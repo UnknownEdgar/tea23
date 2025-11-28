@@ -1,5 +1,6 @@
 #include <fmt/chrono.h>
 #include <fmt/format.h>
+#include <chrono>
 #include "list.hpp"
 #include "vector.hpp"
 
@@ -69,7 +70,52 @@ auto main(int argc, char** argv) -> int
     fmt::print("  Contents: ");
     vector_print(&myVector);
 
-    vector_clear(&myVector);
+    // ========== OPTIONAL: PERFORMANCE TESTING ==========
+    fmt::print("\n=== PERFORMANCE COMPARISON (Insert at position 1) ===\n");
 
+    const int NUM_INSERTS = 10000;
+
+    // Test Vector insert_at
+    Vector_t perfVector;
+    vector_init(&perfVector);
+    
+    auto vectorStart = std::chrono::high_resolution_clock::now();
+    for (int i = 0; i < NUM_INSERTS; ++i) {
+        vector_insert_at(&perfVector, 0, i);  // Insert at beginning
+    }
+    auto vectorEnd = std::chrono::high_resolution_clock::now();
+    auto vectorDuration = std::chrono::duration_cast<std::chrono::microseconds>(vectorEnd - vectorStart);
+
+    fmt::print("Vector insert_at (at position 0) {} times: {}µs\n", NUM_INSERTS, vectorDuration.count());
+    vector_clear(&perfVector);
+
+    // Test List insert (at beginning)
+    List_t* perfList = NewList();
+    
+    auto listStart = std::chrono::high_resolution_clock::now();
+    for (int i = 0; i < NUM_INSERTS; ++i) {
+        ListNode_t* node = NewListNode();
+        node->data = i;
+        // For fairness, we insert after the first node if list is not empty
+        if (perfList->pHead != nullptr) {
+            InsertIntoLinkedListAfterNode(perfList, perfList->pHead, node);
+        } else {
+            InsertIntoLinkedList(perfList, node);
+        }
+    }
+    auto listEnd = std::chrono::high_resolution_clock::now();
+    auto listDuration = std::chrono::duration_cast<std::chrono::microseconds>(listEnd - listStart);
+
+    fmt::print("List insert_after (after first node) {} times: {}µs\n", NUM_INSERTS, listDuration.count());
+    FreeList(perfList);
+
+    fmt::print("\nConclusion:\n");
+    if (vectorDuration.count() < listDuration.count()) {
+        fmt::print("  Vector is faster for this operation\n");
+    } else {
+        fmt::print("  List is faster for this operation\n");
+    }
+
+    myVector.data = nullptr;  // Already cleared, just set to nullptr
     return 0;
 }

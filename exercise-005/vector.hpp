@@ -14,6 +14,7 @@ void vector_clear(Vector_t* vec);
 
 int vector_push_back(Vector_t* vec, unsigned int value);
 int vector_get(const Vector_t* vec, size_t index, unsigned int* outValue);
+int vector_insert_at(Vector_t* vec, size_t index, unsigned int value);
 void vector_print(const Vector_t* vec);
 
 #endif
